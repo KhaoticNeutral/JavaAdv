@@ -1,0 +1,32 @@
+package examples.SynchronizedExamples;
+
+public class AtomicCounterRunnable implements Runnable{
+    private AtomicCounter count = new AtomicCounter();
+    private int countSize = 0;
+    private String threadName;
+
+    public AtomicCounterRunnable(){
+        super();
+    }
+
+    public AtomicCounterRunnable(int countSize, String threadName){
+        this.countSize = countSize;
+        this.threadName = threadName;
+    }
+
+    @Override
+    public void run(){
+        for (int i = 0; i < countSize; i++){
+            count.increment();
+            System.out.println(threadName
+                    + " Current Count: " + this.getCounter());
+        }
+    }
+
+    public synchronized int getCounter(){
+        return count.getValue();
+    }
+}
+
+//The `AtomicCounterRunnable` class uses an `AtomicCounter` to manage a shared counter in a multi-threaded environment.
+// It increments the counter in a loop, demonstrating thread-safe access through the `AtomicCounter`'s methods.
